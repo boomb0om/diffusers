@@ -268,9 +268,9 @@ class GELU(nn.Module):
 
     def gelu(self, gate):
         if gate.device.type != "mps":
-            return F.gelu(gate, approximate=self.approximate)
+            return F.gelu(gate)
         # mps: gelu is not implemented for float16
-        return F.gelu(gate.to(dtype=torch.float32), approximate=self.approximate).to(dtype=gate.dtype)
+        return F.gelu(gate.to(dtype=torch.float32)).to(dtype=gate.dtype)
 
     def forward(self, hidden_states):
         hidden_states = self.proj(hidden_states)
